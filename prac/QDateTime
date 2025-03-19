@@ -4,6 +4,26 @@
 
 namespace prac {
 
+#ifndef PRAC_TESTS
+
 using QDateTime = ::QDateTime;
+
+#else
+
+class QDateTime : public ::QDateTime {
+public:
+    using ::QDateTime::QDateTime;
+    QDateTime() = default;
+
+    ~QDateTime() = default;
+
+    static ::QDateTime& currentDateTime() {
+        static ::QDateTime time;
+        return time;
+    }
+};
+
+
+#endif
 
 }
