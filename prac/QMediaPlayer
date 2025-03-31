@@ -1,9 +1,100 @@
 #pragma once
 
 #include <QMediaPlayer>
+#include <QAudioOutput>
+#include <QVideoWidget>
+#include <QObject>
 
 namespace prac {
 
+#ifndef PRAC_TESTS
+
 using QMediaPlayer = ::QMediaPlayer;
+
+#else
+
+class QMediaPlayer : public ::QMediaPlayer {
+public:
+    //using ::QMediaPlayer::QMediaPlayer;
+
+    static QMediaPlayer* getLastCreated() {
+        return last_created_;
+    }
+
+    QMediaPlayer(QObject* parent): ::QMediaPlayer::QMediaPlayer(parent) {
+        last_created_ = this;
+    }
+
+    static bool& getAudioConnected() {
+        static bool audioConnected = false;
+        return audioConnected;
+    }
+
+    static bool& getVideoConnected() {
+        static bool videoConnected = false;
+        return videoConnected;
+    }
+
+    static bool& sourceIsSet() {
+        static bool isSet = false;
+        return isSet;
+    }
+
+    static ::QMediaPlayer::PlaybackState& getState() {
+        static ::QMediaPlayer::PlaybackState state = ::QMediaPlayer::PlaybackState::StoppedState;
+        return state;
+    }
+
+    static qint64& getPosition() {
+        static qint64 position = -1;
+        return position;
+    }
+
+    void setAudioOutput(QAudioOutput* output) {
+        ::QMediaPlayer::setAudioOutput(output);
+        getAudioConnected() = true;
+    }
+
+    void setVideoOutput(QVideoWidget* widget) {
+        ::QMediaPlayer::setVideoOutput(widget);
+        getVideoConnected() = true;
+    }
+
+    void setSource(const QUrl &source) {
+        if (source == QUrl("file:test_filename_from_mock_getOpenFileName") ) {
+            sourceIsSet() = true;
+        }
+    }
+
+    void play() {
+        getState() = ::QMediaPlayer::PlaybackState::PlayingState;
+    }
+
+    void pause() {
+        getState() = ::QMediaPlayer::PlaybackState::PausedState;
+    }
+
+    void setPosition(qint64 position) {
+        getPosition() = position;
+    }
+
+    ::QMediaPlayer::PlaybackState playbackState() {
+        return getState();
+    }
+
+    int duration() {
+        return 666;
+    }
+
+    void emitMediaStatusChanged(::QMediaPlayer::MediaStatus status) {
+        emit mediaStatusChanged(status);
+    }
+private:
+    inline static QMediaPlayer* last_created_ = nullptr;
+
+};
+
+
+#endif
 
 }
