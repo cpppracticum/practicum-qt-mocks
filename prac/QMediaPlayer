@@ -15,8 +15,6 @@ using QMediaPlayer = ::QMediaPlayer;
 
 class QMediaPlayer : public ::QMediaPlayer {
 public:
-    //using ::QMediaPlayer::QMediaPlayer;
-
     static QMediaPlayer* getLastCreated() {
         return last_created_;
     }
