@@ -19,7 +19,7 @@ public:
 
     ~QTime() = default;
 
-    static QTime& currentTime() {
+    static ::QTime& currentTime() {
         static QTime time;
         return time;
     }
