@@ -14,6 +14,10 @@ class QFileDialog : public ::QFileDialog {
 public:
     using ::QFileDialog::QFileDialog;
 
+    static void setMockedOpenFileName(const QString& name) {
+        mocked_open_file_name_ = name;
+    }
+
     static QString getOpenFileName(
         QWidget *parent = 0,
         const QString &caption = QString(),
@@ -21,9 +25,10 @@ public:
         const QString &filter = QString(),
         QString *selectedFilter = 0,
         Options options = Options()) {
-        return QString("test_filename_from_mock_getOpenFileName");
+        return mocked_open_file_name_;
     }
-
+private:
+    inline static QString mocked_open_file_name_ = QString("test_filename_from_mock_getOpenFileName");
 };
 
 
