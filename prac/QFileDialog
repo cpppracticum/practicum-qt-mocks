@@ -18,6 +18,10 @@ public:
         mocked_open_file_name_ = name;
     }
 
+    static void setMockedExistingDirectory(const QString& name) {
+        mocked_existing_dir_name_ = name;
+    }
+
     static QString getOpenFileName(
         QWidget *parent = 0,
         const QString &caption = QString(),
@@ -27,8 +31,18 @@ public:
         Options options = Options()) {
         return mocked_open_file_name_;
     }
+
+    static QString getExistingDirectory(
+        QWidget *parent = 0,
+        const QString &caption = QString(),
+        const QString &dir = QString(),
+        Options options = Options()) {
+        return mocked_existing_dir_name_;
+    }
+
 private:
     inline static QString mocked_open_file_name_ = QString("test_filename_from_mock_getOpenFileName");
+    inline static QString mocked_existing_dir_name_ = QString("test_dirname_from_mock_getExistingDirectory");
 };
 
 
