@@ -18,6 +18,9 @@ public:
     static QMediaPlayer* getLastCreated() {
         return last_created_;
     }
+    QMediaPlayer() {
+        last_created_ = this;
+    };
 
     QMediaPlayer(QObject* parent): ::QMediaPlayer::QMediaPlayer(parent) {
         last_created_ = this;
@@ -62,10 +65,15 @@ public:
         getVideoConnected() = true;
     }
 
-    void setSource(const QUrl &source) {
-        if (source == QUrl("file:test_filename_from_mock_getOpenFileName") ) {
+    void setSource(const QUrl &new_source) {
+        if (new_source == QUrl("file:test_filename_from_mock_getOpenFileName") ) {
             sourceIsSet() = true;
         }
+        source = new_source;
+    }
+
+    QUrl getSource() const {
+        return source;
     }
 
     void play() {
@@ -94,6 +102,8 @@ public:
 private:
     inline static QMediaPlayer* last_created_ = nullptr;
     inline static int mocked_duration_ = 123;
+    inline static QUrl source{};
+
 };
 
 
