@@ -65,14 +65,12 @@ public:
         getVideoConnected() = true;
     }
 
-    void setSource(const QUrl &new_source) {
-        if (new_source == QUrl("file:test_filename_from_mock_getOpenFileName") ) {
-            sourceIsSet() = true;
-        }
+    static void setSource(const QUrl &new_source) {
         source = new_source;
+        sourceIsSet() = true;
     }
 
-    QUrl getSource() const {
+    static QUrl getSource() {
         return source;
     }
 
