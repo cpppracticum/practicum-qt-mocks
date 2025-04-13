@@ -10,7 +10,6 @@ template<> inline char * QTest::toString(const std::string &str)
     return data;
 }
 
-
 template <typename T1, typename T2>
 inline bool prac_compare(const T1 &t1, const T2 &t2, const char *actual, const char *expected,
                          const char *file, const int line)
@@ -24,7 +23,6 @@ inline bool prac_compare(const QString &t1, const QString &t2, const char *actua
 {
     return QTest::qCompare(t1.toStdString(), t2.toStdString(), actual, expected, file, line);
 }
-
 
 template <typename T2>
 inline bool prac_compare(const QString &t1, const T2 &t2, const char *actual, const char *expected,
@@ -42,7 +40,6 @@ inline bool prac_compare(const QString &t1, const T2 *t2, const char *actual, co
     return QTest::qCompare(t1.toStdString(), t2, actual, expected, file, line);
 }
 
-
 template <typename T2>
 inline bool prac_compare(const QString &t1, const T2 t2, const char *actual, const char *expected,
                          const char *file, const int line)
@@ -51,13 +48,11 @@ inline bool prac_compare(const QString &t1, const T2 t2, const char *actual, con
     return QTest::qCompare(t1.toStdString(), t2.toStdString(), actual, expected, file, line);
 }
 
-
 #define PRAC_COMPARE(actual, expected) \
 do {\
     if (!prac_compare(actual, expected, #actual, #expected, __FILE__, __LINE__))\
     return;\
 } while (false)
-
 
 template <typename T1, typename T2>
 inline bool prac_compare2(const T1 &t1, const T2 &t2, const char *actual, const char *expected, const char *msg,
@@ -74,7 +69,6 @@ inline bool prac_compare2(const QString &t1, const QString &t2, const char *actu
     return prac_compare2(t1.toStdString(), t2.toStdString(), actual, expected, msg, file, line);
 }
 
-
 template <typename T2>
 inline bool prac_compare2(const QString &t1, const T2 &t2, const char *actual, const char *expected, const char *msg,
                          const char *file, const int line)
@@ -82,7 +76,6 @@ inline bool prac_compare2(const QString &t1, const T2 &t2, const char *actual, c
     return prac_compare2(t1.toStdString(), t2, actual, expected, msg, file, line);
 
 }
-
 
 template <typename T2>
 inline bool prac_compare2(const QString &t1, const T2 *t2, const char *actual, const char *expected, const char *msg,
@@ -98,7 +91,6 @@ inline bool prac_compare2(const QString &t1, const T2 t2, const char *actual, co
 {
     return prac_compare2(t1.toStdString(), t2, actual, expected, msg, file, line);
 }
-
 
 #define PRAC_COMPARE2(actual, expected, message) \
 do {\
