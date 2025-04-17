@@ -97,13 +97,17 @@ public:
     void emitMediaStatusChanged(::QMediaPlayer::MediaStatus status) {
         emit mediaStatusChanged(status);
     }
+
+    void emitPositionChanged(qint64 position) {
+        emit positionChanged(position);
+    }
+
 private:
     inline static QMediaPlayer* last_created_ = nullptr;
     inline static int mocked_duration_ = 123;
     inline static QUrl source{};
 
 };
-
 
 #endif
 
